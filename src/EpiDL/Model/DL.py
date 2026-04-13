@@ -9,6 +9,18 @@ SPECIAL_MODEL_PARAM_DICT = {
     "CNNModel":['linear_hid', 'dropout']
 }
 
+
+def find_exact_index_ranges(df, col, tgt_values):
+    values = df[col].tolist()
+    n = len(tgt_values)
+    
+    matches = []
+    for i in range(len(values) - n + 1):
+        if values[i:i+n] == tgt_values:
+            # only can be matched once!
+            return df.index[i], df.index[i+n-1]
+    return None 
+
 def fit_dl_ml_model(data, Time_col, Case_col, model_kwargs,device = 'cpu', **kwargs):
     """
     fit dl and ml model, currently not supported for optuna and other hyperparameters tuning framework.
@@ -59,12 +71,7 @@ def fit_dl_ml_model(data, Time_col, Case_col, model_kwargs,device = 'cpu', **kwa
     result = task.train_model(dataset=dataset,
                             loss='mse',      # loss function; using MSE as default
                             
-                            # epochs=100,      # training epochs, we can use more epochs to obtain better performance
-                            # lr=0.04,         # learning rate of the model
-                            # train_rate=0.6,  # 60% is used for training
-                            # val_rate=0.2,    # 20% is used for validation; the rest 20% is for testing
-                            # weight_decay=1e-6,
-                            # batch_size=32,
+
                             model_args=model_args,
                             device='cpu',
                             **model_kwargs
@@ -72,10 +79,21 @@ def fit_dl_ml_model(data, Time_col, Case_col, model_kwargs,device = 'cpu', **kwa
 
     predictions, groundtruth = task.plot_forecasts(task.test_dataset, index_range=(0, -1))
 
+    # train_start_idx, train_end_idx =  find_exact_index_ranges(data, Case_col, tgt_values=fit_res['Prediction_df']['groundtruth'].numpy().tolist())
+    # data.iloc[train_start_idx:train_end_idx, 'Type'] = 'Train'
+
+    # val_start_idx, val_end_idx =  find_exact_index_ranges(data, Case_col, tgt_values=fit_res['Prediction_df']['groundtruth'].numpy().tolist())
+    # data.iloc[val_start_idx:val_end_idx, 'Type'] = 'Val'
+
+    test_start_idx, test_end_idx =  find_exact_index_ranges(data, Case_col, tgt_values=groundtruth.numpy().tolist())
+    data.iloc[test_start_idx:test_end_idx, 'Type'] = 'Test'
+    data.iloc[test_start_idx:test_end_idx, 'Predictions'] = predictions.numpy()
+
     Metric = result
     del Metric['predictions']
+    del Metric['targets']
     return {
         "Model":task, 
-        "Prediction_df": {"predictions": predictions, "groundtruth": groundtruth},  # only return test_dataset
+        "Prediction_df": data,  # only return test_dataset
         "Metric":Metric
     }
