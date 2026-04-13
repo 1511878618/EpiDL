@@ -79,7 +79,7 @@ print(fit_res)
 
 print(fit_res['Prediction_df'])
 
-# Year/Month  Cases/pct  Type  Predictions
+# Year/Month  Cases/pct  Type  Pred
 # 591 2025-11-10       20.0  Test    10.452312
 # 592 2025-11-17       30.0  Test    33.484791
 # 593 2025-11-24       31.0  Test    29.570511
