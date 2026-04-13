@@ -87,7 +87,7 @@ def fit_dl_ml_model(data, Time_col, Case_col, model_kwargs,device = 'cpu', **kwa
     test_start_idx, test_end_idx =  find_exact_index_ranges(data, Case_col, tgt_values=groundtruth)
 
     data.loc[test_start_idx:test_end_idx, 'Type'] = 'Test'
-    data.loc[test_start_idx:test_end_idx, 'Predictions'] = predictions.numpy()
+    data.loc[test_start_idx:test_end_idx, 'Pred'] = predictions.numpy()
     print(f"Test data range: {test_start_idx} to {test_end_idx}")
 
     Metric = result
