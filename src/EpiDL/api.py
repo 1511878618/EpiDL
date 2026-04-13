@@ -1,4 +1,4 @@
-from simulation_infective_diseases.Model import fit_sir_etc_model, fit_dl_ml_model
+from EpiDL.Model import fit_sir_etc_model, fit_dl_ml_model
 import pandas as pd 
 SIR_ETC_Model = ['SIR','SEIR']
 DL_ML_Model = ['LSTM', 'GRU', 'CNN', 'Dlinear']

@@ -79,15 +79,16 @@ def fit_dl_ml_model(data, Time_col, Case_col, model_kwargs,device = 'cpu', **kwa
 
     predictions, groundtruth = task.plot_forecasts(task.test_dataset, index_range=(0, -1))
 
-    # train_start_idx, train_end_idx =  find_exact_index_ranges(data, Case_col, tgt_values=fit_res['Prediction_df']['groundtruth'].numpy().tolist())
-    # data.iloc[train_start_idx:train_end_idx, 'Type'] = 'Train'
+    # GET IDX
+    groundtruth = groundtruth.numpy()
+    groundtruth = groundtruth.astype(data[Case_col].dtype)
+    groundtruth = groundtruth.tolist()
 
-    # val_start_idx, val_end_idx =  find_exact_index_ranges(data, Case_col, tgt_values=fit_res['Prediction_df']['groundtruth'].numpy().tolist())
-    # data.iloc[val_start_idx:val_end_idx, 'Type'] = 'Val'
+    test_start_idx, test_end_idx =  find_exact_index_ranges(data, Case_col, tgt_values=groundtruth)
 
-    test_start_idx, test_end_idx =  find_exact_index_ranges(data, Case_col, tgt_values=groundtruth.numpy().tolist())
-    data.iloc[test_start_idx:test_end_idx, 'Type'] = 'Test'
-    data.iloc[test_start_idx:test_end_idx, 'Predictions'] = predictions.numpy()
+    data.loc[test_start_idx:test_end_idx, 'Type'] = 'Test'
+    data.loc[test_start_idx:test_end_idx, 'Predictions'] = predictions.numpy()
+    print(f"Test data range: {test_start_idx} to {test_end_idx}")
 
     Metric = result
     del Metric['predictions']
