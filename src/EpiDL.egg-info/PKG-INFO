@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: EpiDL
+Version: 0.1.0
+Summary: Short description of your package
+Author-email: Tingfeng Xu <xutingfeng@big.ac.cn>
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: epilearn
+Requires-Dist: Eir
+Requires-Dist: torch==2.7.0
+Requires-Dist: torchvision==0.22.0
+Requires-Dist: torchaudio==2.7.0
+Requires-Dist: torch_geometric
+Requires-Dist: epydemix

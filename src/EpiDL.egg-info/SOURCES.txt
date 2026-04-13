@@ -1,0 +1,11 @@
+pyproject.toml
+src/EpiDL/__init__.py
+src/EpiDL/api.py
+src/EpiDL.egg-info/PKG-INFO
+src/EpiDL.egg-info/SOURCES.txt
+src/EpiDL.egg-info/dependency_links.txt
+src/EpiDL.egg-info/requires.txt
+src/EpiDL.egg-info/top_level.txt
+src/EpiDL/Model/DL.py
+src/EpiDL/Model/SIR.py
+src/EpiDL/Model/__init__.py
