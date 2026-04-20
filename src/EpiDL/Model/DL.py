@@ -6,7 +6,8 @@ from epilearn.tasks import Forecast
 import epilearn.models.Temporal as epilearn_Temporal
 import pandas as pd 
 SPECIAL_MODEL_PARAM_DICT = {
-    "CNNModel":['linear_hid', 'dropout']
+    "CNNModel":['linear_hid', 'dropout'],
+    "Dlienar":[]
 }
 
 
