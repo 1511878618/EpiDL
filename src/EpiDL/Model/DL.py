@@ -7,7 +7,7 @@ import epilearn.models.Temporal as epilearn_Temporal
 import pandas as pd 
 SPECIAL_MODEL_PARAM_DICT = {
     "CNNModel":['linear_hid', 'dropout'],
-    "Dlienar":[]
+    "DlinearModel":[]
 }
 
 
@@ -51,7 +51,6 @@ def fit_dl_ml_model(data, Time_col, Case_col, model_kwargs,device = 'cpu', **kwa
     # to adding into pop_to_model_args
     specical_model_args = SPECIAL_MODEL_PARAM_DICT.get(prototype, ['nhid','dropout'])
     pop_to_model_args +=specical_model_args 
-
     # get model_args
     model_args = {"device":device, 'num_features':1 # currently only based on infective counts of previous. 
                   }
